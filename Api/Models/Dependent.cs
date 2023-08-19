@@ -9,4 +9,12 @@ public class Dependent
     public Relationship Relationship { get; set; }
     public int EmployeeId { get; set; }
     public Employee? Employee { get; set; }
+
+    public Dependent(string firstName, string lastName, DateTime dateOfBirth, Relationship relationship)
+    {
+        FirstName = firstName;
+        LastName = lastName;
+        DateOfBirth = dateOfBirth;
+        Relationship = relationship;
+    }
 }
