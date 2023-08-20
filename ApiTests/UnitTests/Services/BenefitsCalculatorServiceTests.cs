@@ -24,8 +24,8 @@ public class BenefitsCalculatorServiceTests
     public void EmployeeWithTwoDependentsReturnsCostsOfTwentyTwoHundred()
     {
         var employee = new Employee("Lebron", "James", new DateTime(1984, 12, 30), 75420.99m);
-        employee.Dependents.Add(new Dependent("Spouse", "James", new DateTime(1984, 10, 30), Relationship.Spouse));
-        employee.Dependents.Add(new Dependent("Child1", "James", new DateTime(2010, 6, 15), Relationship.Child));
+        employee.AddDependent(new Dependent("Spouse", "James", new DateTime(1984, 10, 30), Relationship.Spouse));
+        employee.AddDependent(new Dependent("Child1", "James", new DateTime(2010, 6, 15), Relationship.Child));
 
         var result = _calculatorService.CalculateBenefitsCost(employee);
 
@@ -46,7 +46,7 @@ public class BenefitsCalculatorServiceTests
     public void EmployeeWithDependentsOverFiftyReturnsEighteenHundred()
     {
         var employee = new Employee("Lebron", "James", new DateTime(1984, 12, 30), 75420.99m);
-        employee.Dependents.Add(new Dependent("Spouse", "James", DateTime.Now.AddYears(-50), Relationship.Spouse));
+        employee.AddDependent(new Dependent("Spouse", "James", DateTime.Now.AddYears(-50), Relationship.Spouse));
 
         var result = _calculatorService.CalculateBenefitsCost(employee);
 

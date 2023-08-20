@@ -3,10 +3,10 @@
 public class Dependent
 {
     public int Id { get; set; }
-    public string? FirstName { get; set; }
-    public string? LastName { get; set; }
-    public DateTime DateOfBirth { get; set; }
-    public Relationship Relationship { get; set; }
+    public string FirstName { get; private set; }
+    public string LastName { get; private set; }
+    public DateTime DateOfBirth { get; private set; }
+    public Relationship Relationship { get; private set; }
     public int EmployeeId { get; set; }
     public Employee? Employee { get; set; }
 

@@ -45,11 +45,11 @@ public class DependentAgeGreaterThanFiftyRule : IBenefitsCostRule
     }
 }
 
-public class BenefitsCostRuleEngine
+public class BenefitsCostRulesEngine
 {
     private readonly List<IBenefitsCostRule> _rules = new List<IBenefitsCostRule>();
 
-    public BenefitsCostRuleEngine(IEnumerable<IBenefitsCostRule> rules)
+    public BenefitsCostRulesEngine(IEnumerable<IBenefitsCostRule> rules)
     {
         _rules.AddRange(rules);
     }
@@ -69,7 +69,7 @@ public class BenefitsCalculatorService
             .Where(b => ruleType.IsAssignableFrom(b) && !b.IsInterface)
             .Select(r => Activator.CreateInstance(r) as IBenefitsCostRule);
 
-        var engine = new BenefitsCostRuleEngine(rules);
+        var engine = new BenefitsCostRulesEngine(rules);
 
         return engine.CalculateBenefitsCost(employee);
     }
