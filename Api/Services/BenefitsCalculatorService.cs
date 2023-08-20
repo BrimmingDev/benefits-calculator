@@ -45,11 +45,11 @@ public class DependentAgeGreaterThanFiftyRule : IBenefitsCostRule
     }
 }
 
-public class BenefitsCostRulesEngine
+public class BenefitsCalculatorService
 {
-    private readonly List<IBenefitsCostRule> _rules = new List<IBenefitsCostRule>();
+    private readonly List<IBenefitsCostRule> _rules = new();
 
-    public BenefitsCostRulesEngine(IEnumerable<IBenefitsCostRule> rules)
+    public BenefitsCalculatorService(IEnumerable<IBenefitsCostRule> rules)
     {
         _rules.AddRange(rules);
     }
@@ -57,20 +57,5 @@ public class BenefitsCostRulesEngine
     public decimal CalculateBenefitsCost(Employee employee)
     {
         return _rules.Aggregate(0m, (current, rule) => rule.CalculateCost(employee, current));
-    }
-}
-
-public class BenefitsCalculatorService
-{
-    public decimal CalculateBenefitsCost(Employee employee)
-    {
-        var ruleType = typeof(IBenefitsCostRule);
-        IEnumerable<IBenefitsCostRule> rules = this.GetType().Assembly.GetTypes()
-            .Where(b => ruleType.IsAssignableFrom(b) && !b.IsInterface)
-            .Select(r => Activator.CreateInstance(r) as IBenefitsCostRule);
-
-        var engine = new BenefitsCostRulesEngine(rules);
-
-        return engine.CalculateBenefitsCost(employee);
     }
 }

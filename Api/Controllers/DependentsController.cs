@@ -1,4 +1,4 @@
-﻿using Api.Dtos.Dependent;
+﻿using Api.Dtos;
 using Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;

@@ -10,13 +10,15 @@ public class Employee
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string? Id { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public decimal Salary { get; set; }
-    public DateTime DateOfBirth { get; set; }
+    public string FirstName { get; private set; }
+    public string LastName { get; private set; }
+    public decimal Salary { get; private set; }
+    public DateTime DateOfBirth { get; private set; }
 
-    private readonly List<Dependent> _dependents = new();
-    public ICollection<Dependent> Dependents => _dependents.AsReadOnly();
+    [BsonElement("dependents")] 
+    private List<Dependent> _dependents = new();
+    public IReadOnlyCollection<Dependent> Dependents => _dependents.AsReadOnly();
+    
     public Employee(string firstName, string lastName, DateTime dateOfBirth, decimal salary)
     {
         FirstName = firstName;
