@@ -1,17 +1,17 @@
 ﻿using Api.Models;
 
-namespace Api.Dtos;
+namespace Api.ApiModels;
 
-public class GetDependentDto
+public class GetDependentDTO
 {
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public DateTime DateOfBirth { get; set; }
     public Relationship Relationship { get; set; }
 
-    public static GetDependentDto FromDependent(Models.Dependent dependent)
+    public static GetDependentDTO FromDependent(Models.Dependent dependent)
     {
-        return new GetDependentDto()
+        return new GetDependentDTO()
         {
             FirstName = dependent.FirstName,
             LastName = dependent.LastName,

@@ -1,5 +1,6 @@
 using Api.Models;
 using Api.Services;
+using Api.Services.BenefitsCalcuationRules;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,10 +11,11 @@ builder.Services.Configure<EmployeeBenefitsDatabaseSettings>(
 
 builder.Services.AddSingleton<EmployeesService>();
 
-builder.Services.AddScoped<IBenefitsCostRule, BaseCostCostRule>();
-builder.Services.AddScoped<IBenefitsCostRule, DependentsCostRule>();
-builder.Services.AddScoped<IBenefitsCostRule, SalaryGreaterThanEightyThousandRule>();
-builder.Services.AddScoped<IBenefitsCostRule, DependentAgeGreaterThanFiftyRule>();
+builder.Services.AddScoped<BenefitsCostCostCalculatorService>();
+builder.Services.AddScoped<IBenefitsCostCalculationRule, BaseCostCalculationCostCalculationRule>();
+builder.Services.AddScoped<IBenefitsCostCalculationRule, DependentsCostCalculationRule>();
+builder.Services.AddScoped<IBenefitsCostCalculationRule, SalaryGreaterThanEightyThousandCalculationRule>();
+builder.Services.AddScoped<IBenefitsCostCalculationRule, DependentAgeGreaterThanFiftyCalculationRule>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

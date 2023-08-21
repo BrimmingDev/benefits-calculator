@@ -17,6 +17,9 @@ public class EmployeesService
     }
 
     public async Task<List<Employee>> GetAsync() => await _employeesCollection.Find(_ => true).ToListAsync();
+
+    public async Task<Employee?> GetAsync(string id) => 
+        await _employeesCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
     
     public async Task CreateAsync(Employee employee) => await _employeesCollection.InsertOneAsync(employee);
 }

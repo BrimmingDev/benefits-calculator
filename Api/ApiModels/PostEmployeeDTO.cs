@@ -1,6 +1,6 @@
-namespace Api.Dtos;
+namespace Api.ApiModels;
 
-public class PostEmployeeDto
+public class PostEmployeeDTO
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }
