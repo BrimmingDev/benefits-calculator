@@ -2,8 +2,9 @@
 
 namespace Api.ApiModels;
 
-public class GetDependentDTO
+public record GetDependentDTO
 {
+    public string? Id { get; set; }
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public DateTime DateOfBirth { get; set; }
@@ -13,6 +14,7 @@ public class GetDependentDTO
     {
         return new GetDependentDTO()
         {
+            Id = dependent.Id,
             FirstName = dependent.FirstName,
             LastName = dependent.LastName,
             DateOfBirth = dependent.DateOfBirth,
