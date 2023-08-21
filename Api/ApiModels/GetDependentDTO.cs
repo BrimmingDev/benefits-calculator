@@ -2,7 +2,7 @@
 
 namespace Api.ApiModels;
 
-public record GetDependentDTO
+public class GetDependentDTO
 {
     public string? Id { get; set; }
     public string? FirstName { get; set; }
@@ -10,7 +10,7 @@ public record GetDependentDTO
     public DateTime DateOfBirth { get; set; }
     public Relationship Relationship { get; set; }
 
-    public static GetDependentDTO FromDependent(Models.Dependent dependent)
+    public static GetDependentDTO FromDependent(Dependent dependent)
     {
         return new GetDependentDTO()
         {

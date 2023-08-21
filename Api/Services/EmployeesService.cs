@@ -1,5 +1,6 @@
 using Api.Models;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Api.Services;
@@ -20,6 +21,13 @@ public class EmployeesService
 
     public async Task<Employee?> GetAsync(string id) => 
         await _employeesCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
+
+    public async Task<Employee?> GetWithDependId(string dependentId)
+    {
+        var filter = Builders<Employee>.Filter.Lte("dependents._id", dependentId);
+
+        return await _employeesCollection.Find(filter).FirstOrDefaultAsync();
+    }
     
     public async Task CreateAsync(Employee employee) => await _employeesCollection.InsertOneAsync(employee);
 }
