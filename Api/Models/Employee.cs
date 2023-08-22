@@ -46,7 +46,7 @@ public class Employee : Person
 
     public void UpdateBenefitCosts(decimal cost)
     {
-        BenefitsCost = Guard.Against.NegativeOrZero(cost, nameof(cost));
+        BenefitsCost = Guard.Against.Negative(cost, nameof(cost));
     }
 
     public void GeneratePaystub()

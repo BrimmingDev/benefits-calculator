@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Api.Models;
 using Api.Services;
 using Api.Services.BenefitsCalcuationRules;
@@ -78,5 +79,45 @@ public class EmployeeTests
 
         addDependent.Should().Throw<ArgumentException>()
             .WithMessage("Spouse or Domestic partner already exists for this employee");
+    }
+
+    [Fact]
+    public void GeneratePaystubShouldGenerateAPaystubWithTheCorrectCalculations()
+    {
+        var employee = new Employee("Lebron", "James", new DateTime(1984, 12, 30), 70000m);
+        employee.UpdateBenefitCosts(1000m * 12);
+        
+        employee.GeneratePaystub();
+
+        var paystub = employee.PayStubs.FirstOrDefault();
+        paystub.Gross.Should().Be(2692.31m);
+        paystub.BenefitsCost.Should().Be(461.54m);
+        paystub.Net.Should().Be(paystub.Gross - paystub.BenefitsCost);
+    }
+    
+    [Fact]
+    public void GeneratePaystubShouldGenerateAFinalPaystubForFiscalYearWithCorrectValues()
+    {
+        var employee = new Employee("Lebron", "James", new DateTime(1984, 12, 30), 70000m);
+        employee.UpdateBenefitCosts(1000m * 12);
+        
+        for (int i = 1; i <= 26; i++) { employee.GeneratePaystub(); }
+
+        var paystub = employee.PayStubs.FirstOrDefault(p => p.Id == 26);
+        paystub.Gross.Should().Be(2692.25m);
+        paystub.BenefitsCost.Should().Be(461.50m);
+        paystub.Net.Should().Be(paystub.Gross - paystub.BenefitsCost);
+    }
+    
+    [Fact]
+    public void GeneratePaystubShouldSumUpToTotalSalaryAndBenefitsCostsAfterTwentySixPayPeriods()
+    {
+        var employee = new Employee("Lebron", "James", new DateTime(1984, 12, 30), 70000m);
+        employee.UpdateBenefitCosts(1000m * 12);
+        
+        for (int i = 1; i <= 26; i++) { employee.GeneratePaystub(); }
+
+        employee.PayStubs.Sum(p => p.Gross).Should().Be(70000m);
+        employee.PayStubs.Sum(p => p.BenefitsCost).Should().Be(12000m);
     }
 }
