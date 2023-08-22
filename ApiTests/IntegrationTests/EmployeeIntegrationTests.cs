@@ -84,7 +84,6 @@ public class EmployeeIntegrationTests : IntegrationTest
     }
     
     [Fact]
-    //TODO: make test pass
     public async Task WhenAskedForAnEmployee_ShouldReturnCorrectEmployee()
     {
         var response = await HttpClient.GetAsync("/api/v1/employees/64e3f7e22901660006e20c91");
