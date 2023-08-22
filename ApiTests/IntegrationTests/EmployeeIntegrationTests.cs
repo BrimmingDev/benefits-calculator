@@ -19,6 +19,25 @@ public class EmployeeIntegrationTests : IntegrationTest
         {
             new()
             {
+                Id = "64e3f9b52901660006e20c97",
+                FirstName = "Michael",
+                LastName = "Jordan",
+                Salary = 143211.12m,
+                DateOfBirth = new DateTime(1963, 2, 17).ToUniversalTime(),
+                Dependents = new List<GetDependentDTO>
+                {
+                    new()
+                    {
+                        Id = "64e3f9b52901660006e20c96",
+                        FirstName = "DP",
+                        LastName = "Jordan",
+                        Relationship = Relationship.DomesticPartner,
+                        DateOfBirth = new DateTime(1974, 1, 2).ToUniversalTime()
+                    }
+                }
+            },
+            new()
+            {
                 Id = "64e3f7e22901660006e20c91",
                 FirstName = "LeBron",
                 LastName = "James",
@@ -57,25 +76,6 @@ public class EmployeeIntegrationTests : IntegrationTest
                         LastName = "Morant",
                         Relationship = Relationship.Child,
                         DateOfBirth = new DateTime(2021, 5, 18).ToUniversalTime()
-                    }
-                }
-            },
-            new()
-            {
-                Id = "64e3f9b52901660006e20c97",
-                FirstName = "Michael",
-                LastName = "Jordan",
-                Salary = 143211.12m,
-                DateOfBirth = new DateTime(1963, 2, 17).ToUniversalTime(),
-                Dependents = new List<GetDependentDTO>
-                {
-                    new()
-                    {
-                        Id = "64e3f9b52901660006e20c96",
-                        FirstName = "DP",
-                        LastName = "Jordan",
-                        Relationship = Relationship.DomesticPartner,
-                        DateOfBirth = new DateTime(1974, 1, 2).ToUniversalTime()
                     }
                 }
             }

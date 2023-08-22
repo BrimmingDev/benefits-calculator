@@ -1,0 +1,84 @@
+[
+  {
+    "_id": {
+      "$oid": "64e3f7e22901660006e20c91"
+    },
+    "FirstName": "LeBron",
+    "LastName": "James",
+    "DateOfBirth": {
+      "$date": "1984-12-30T05:00:00.000Z"
+    },
+    "Salary": "75420.99",
+    "BenefitsCost": "12000",
+    "dependents": [],
+    "paystubs": []
+  },
+  {
+    "_id": {
+      "$oid": "64e3f8fb2901660006e20c95"
+    },
+    "FirstName": "Ja",
+    "LastName": "Morant",
+    "DateOfBirth": {
+      "$date": "1999-08-10T04:00:00.000Z"
+    },
+    "Salary": "92365.22",
+    "BenefitsCost": "55767.72",
+    "dependents": [
+      {
+        "FirstName": "Spouse",
+        "LastName": "Morant",
+        "DateOfBirth": {
+          "$date": "1998-03-03T05:00:00.000Z"
+        },
+        "_id": "64e3f8fb2901660006e20c92",
+        "Relationship": 1
+      },
+      {
+        "FirstName": "Child1",
+        "LastName": "Morant",
+        "DateOfBirth": {
+          "$date": "2020-06-23T04:00:00.000Z"
+        },
+        "_id": "64e3f8fb2901660006e20c93",
+        "Relationship": 3
+      },
+      {
+        "FirstName": "Child2",
+        "LastName": "Morant",
+        "DateOfBirth": {
+          "$date": "2021-05-18T04:00:00.000Z"
+        },
+        "_id": "64e3f8fb2901660006e20c94",
+        "Relationship": 3
+      }
+    ],
+    "paystubs": []
+  },
+  {
+    "_id": {
+      "$oid": "64e3f9b52901660006e20c97"
+    },
+    "FirstName": "Michael",
+    "LastName": "Jordan",
+    "DateOfBirth": {
+      "$date": {
+        "$numberLong": "-216846000000"
+      }
+    },
+    "Salary": "143211.12",
+    "BenefitsCost": "53570.76",
+    "dependents": [
+      {
+        "FirstName": "DP",
+        "LastName": "Jordan",
+        "DateOfBirth": {
+          "$date": "1974-01-02T05:00:00.000Z"
+        },
+        "_id": "64e3f9b52901660006e20c96",
+        "Relationship": 2
+      }
+    ],
+    "paystubs": []
+  }
+]

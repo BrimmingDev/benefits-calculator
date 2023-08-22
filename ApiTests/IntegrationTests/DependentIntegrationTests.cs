@@ -19,6 +19,14 @@ public class DependentIntegrationTests : IntegrationTest
         {
             new()
             {
+                Id = "64e3f9b52901660006e20c96",
+                FirstName = "DP",
+                LastName = "Jordan",
+                Relationship = Relationship.DomesticPartner,
+                DateOfBirth = new DateTime(1974, 1, 2).ToUniversalTime()
+            },
+            new()
+            {
                 Id = "64e3f8fb2901660006e20c92",
                 FirstName = "Spouse",
                 LastName = "Morant",
@@ -40,14 +48,6 @@ public class DependentIntegrationTests : IntegrationTest
                 LastName = "Morant",
                 Relationship = Relationship.Child,
                 DateOfBirth = new DateTime(2021, 5, 18).ToUniversalTime()
-            },
-            new()
-            {
-                Id = "64e3f9b52901660006e20c96",
-                FirstName = "DP",
-                LastName = "Jordan",
-                Relationship = Relationship.DomesticPartner,
-                DateOfBirth = new DateTime(1974, 1, 2).ToUniversalTime()
             }
         };
         await response.ShouldReturn(HttpStatusCode.OK, dependents);
