@@ -30,4 +30,7 @@ public class EmployeesService
     }
     
     public async Task CreateAsync(Employee employee) => await _employeesCollection.InsertOneAsync(employee);
+
+    public async Task UpdateAsync(string id, Employee updatedEmployee) =>
+        await _employeesCollection.ReplaceOneAsync(x => x.Id == id, updatedEmployee);
 }
