@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Api.ApiModels;
 using Api.Models;
+using Ardalis.HttpClientTestExtensions;
+using FluentAssertions;
 using MongoDB.Bson;
 using Xunit;
 
@@ -14,7 +17,6 @@ public class EmployeeIntegrationTests : IntegrationTest
     [Fact]
     public async Task WhenAskedForAllEmployees_ShouldReturnAllEmployees()
     {
-        var response = await HttpClient.GetAsync("/api/v1/employees");
         var employees = new List<GetEmployeeDTO>
         {
             new()
@@ -80,13 +82,19 @@ public class EmployeeIntegrationTests : IntegrationTest
                 }
             }
         };
-        await response.ShouldReturn(HttpStatusCode.OK, employees);
+        
+        var response = await HttpClient.GetAndDeserializeAsync<ApiResponse<List<GetEmployeeDTO>>>("/api/v1/employees");
+
+        response.Success.Should().BeTrue();
+        response.Data.Should().NotBeEmpty();
+        response.Data.Count.Should().Be(3);
+        response.Data.FirstOrDefault(r => r.Id == "64e3f9b52901660006e20c97").Should()
+            .BeEquivalentTo(employees.FirstOrDefault(e => e.Id == "64e3f9b52901660006e20c97"));
     }
     
     [Fact]
     public async Task WhenAskedForAnEmployee_ShouldReturnCorrectEmployee()
     {
-        var response = await HttpClient.GetAsync("/api/v1/employees/64e3f7e22901660006e20c91");
         var employee = new GetEmployeeDTO
         {
             Id = "64e3f7e22901660006e20c91",
@@ -95,14 +103,21 @@ public class EmployeeIntegrationTests : IntegrationTest
             Salary = 75420.99m,
             DateOfBirth = new DateTime(1984, 12, 30).ToUniversalTime()
         };
-        await response.ShouldReturn(HttpStatusCode.OK, employee);
+        
+        var response =
+            await HttpClient.GetAndDeserializeAsync<ApiResponse<GetEmployeeDTO>>(
+                "/api/v1/employees/64e3f7e22901660006e20c91");
+
+        response.Success.Should().BeTrue();
+        response.Data.Should().BeEquivalentTo(employee);
     }
     
     [Fact]
     public async Task WhenAskedForANonexistentEmployee_ShouldReturn404()
     {
         var response = await HttpClient.GetAsync($"/api/v1/employees/{ObjectId.GenerateNewId().ToString()}");
-        await response.ShouldReturn(HttpStatusCode.NotFound);
+
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 }
 

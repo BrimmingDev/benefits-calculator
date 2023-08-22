@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Api.ApiModels;
 using Api.Models;
+using Ardalis.HttpClientTestExtensions;
+using FluentAssertions;
 using MongoDB.Bson;
 using Xunit;
 
@@ -14,7 +17,6 @@ public class DependentIntegrationTests : IntegrationTest
     [Fact]
     public async Task WhenAskedForAllDependents_ShouldReturnAllDependents()
     {
-        var response = await HttpClient.GetAsync("/api/v1/dependents");
         var dependents = new List<GetDependentDTO>
         {
             new()
@@ -50,13 +52,20 @@ public class DependentIntegrationTests : IntegrationTest
                 DateOfBirth = new DateTime(2021, 5, 18).ToUniversalTime()
             }
         };
-        await response.ShouldReturn(HttpStatusCode.OK, dependents);
+
+        var response =
+            await HttpClient.GetAndDeserializeAsync<ApiResponse<List<GetDependentDTO>>>("/api/v1/dependents");
+
+        response.Success.Should().BeTrue();
+        response.Data.Should().NotBeEmpty();
+        response.Data.Count.Should().Be(4);
+        response.Data.First(d => d.Id == "64e3f8fb2901660006e20c93").Should()
+            .BeEquivalentTo(dependents.First(d => d.Id == "64e3f8fb2901660006e20c93"));
     }
     
     [Fact]
     public async Task WhenAskedForADependent_ShouldReturnCorrectDependent()
     {
-        var response = await HttpClient.GetAsync("/api/v1/dependents/64e3f8fb2901660006e20c92");
         var dependent = new GetDependentDTO()
         {
             Id = "64e3f8fb2901660006e20c92",
@@ -65,7 +74,13 @@ public class DependentIntegrationTests : IntegrationTest
             Relationship = Relationship.Spouse,
             DateOfBirth = new DateTime(1998, 3, 3).ToUniversalTime()
         };
-        await response.ShouldReturn(HttpStatusCode.OK, dependent);
+
+        var response =
+            await HttpClient.GetAndDeserializeAsync<ApiResponse<GetDependentDTO>>(
+                "/api/v1/dependents/64e3f8fb2901660006e20c92");
+
+        response.Success.Should().BeTrue();
+        response.Data.Should().BeEquivalentTo(dependent);
     }
     
     [Fact]
